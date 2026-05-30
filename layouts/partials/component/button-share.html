@@ -1,0 +1,11 @@
+{{- $page := . -}}
+<div class="button-share navigation">
+  <button class="dropdown-toggle button button-minimal" aria-expanded="false" aria-label="{{ i18n "share_this_post" }}">
+    {{ partial "icons/share.html" . }}
+  </button>
+  <div class="dropdown">
+    <ul>
+      {{ partial "post/social-share.html" $page }}
+    </ul>
+  </div>
+</div>

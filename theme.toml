@@ -1,0 +1,8 @@
+name = "OnFlow"
+license = "MIT"
+licenselink = "https://github.com/priority-vision/onflow/blob/main/LICENSE"
+description = "A clean, minimal personal blog theme with dark mode support"
+homepage = "https://www.priority.vision/themes/onflow/"
+tags = ["blog", "portfolio", "dark-mode", "responsive", "minimal"]
+features = ["blog", "portfolio", "dark-mode", "pagination", "tags", "authors"]
+min_version = "0.110.0"

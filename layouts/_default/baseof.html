@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default "en" }}" data-color-scheme="{{ .Site.Params.color_scheme | default "system" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ block "title" . }}{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}{{ end }}</title>
+
+  {{ if .Site.Params.display_color_scheme_toggle }}
+  {{ partial "color-scheme-head-script.html" . }}
+  {{ end }}
+
+  <link rel="preload" as="style" href="{{ "assets/built/index.css" | relURL }}">
+  <link rel="preload" as="script" href="{{ "assets/vendors/pvs.min.js" | relURL }}">
+  <link rel="preload" as="script" href="{{ "assets/built/index.js" | relURL }}">
+
+  <style>
+    @font-face {
+      font-family: 'Geist';
+      font-display: swap;
+      src: url({{ "assets/vendors/Geist-Variable.woff2" | relURL }}) format("woff2");
+    }
+
+    :root {
+      {{ with .Site.Params.dark_mode_accent_color }}--color-dark-accent: {{ . }};{{ end }}
+      {{ with .Site.Params.foreground_accent_color }}--color-accent-foreground: {{ . }};{{ end }}
+      {{ with .Site.Params.dark_mode_foreground_accent_color }}--color-dark-accent-foreground: {{ . }};{{ end }}
+      --featured-image--aspect-ratio: {{ .Site.Params.feature_image_aspect_ratio | default "16/9" }};
+    }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="{{ "assets/vendors/pvs.min.css" | relURL }}">
+  <link rel="stylesheet" type="text/css" href="{{ "assets/built/index.css" | relURL }}">
+
+  <script src="{{ "assets/vendors/ivent.min.js" | relURL }}"></script>
+  <script src="{{ "assets/vendors/pvs.min.js" | relURL }}"></script>
+
+  <link rel="stylesheet" type="text/css" href="{{ "assets/custom.css" | relURL }}">
+
+  {{ partial "head.html" . }}
+</head>
+
+<body class="{{ block "body-class" . }}{{ end }}">
+  {{ block "main" . }}{{ end }}
+
+  <script src="{{ "assets/built/index.js" | relURL }}"></script>
+  <script src="{{ "assets/custom.js" | relURL }}"></script>
+</body>
+</html>

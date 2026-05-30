@@ -1,0 +1,68 @@
+{{ define "body-class" }}page-home{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+  {{ partial "section/hero.html" (dict
+    "show" true
+    "title" (.Site.Params.header_title | default .Site.Title)
+    "custom_excerpt" .Site.Params.header_description
+    "feature_image" .Site.Params.header_image
+    "feature_alt" .Site.Params.header_title
+    "show_social_links" true
+    "Site" .Site
+  ) }}
+
+  {{/* Tags navigation */}}
+  {{ $tagsCount := .Site.Params.tags_list_above_posts | default 10 }}
+  {{ $allTags := .Site.Taxonomies.tags.ByCount }}
+  {{ if $allTags }}
+  <nav class="section section-tags navigation container" aria-label="{{ i18n "tags_navigation" }}">
+    <ul>
+      {{ range first $tagsCount $allTags }}
+      <li>
+        <a class="nav-link" href="{{ .Page.RelPermalink }}">
+          <span class="label">{{ .Page.Title }}</span>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+
+  {{/* Latest posts */}}
+  {{ $postsCount := .Site.Params.latest_posts_count | default 5 }}
+  {{ if $postsCount }}
+  {{ $posts := where site.RegularPages "Section" "posts" }}
+  {{ $posts = first $postsCount $posts }}
+  {{ if $posts }}
+  {{ partial "section/posts.html" (dict
+    "pages" $posts
+    "show_button" true
+    "site" .Site
+  ) }}
+  {{ end }}
+  {{ end }}
+
+  {{/* Projects */}}
+  {{ $projectsCount := .Site.Params.projects_count | default 3 }}
+  {{ if $projectsCount }}
+  {{ $projects := where site.RegularPages "Section" "projects" }}
+  {{ $projects = first $projectsCount $projects }}
+  {{ if $projects }}
+  {{ partial "section/projects.html" (dict
+    "pages" $projects
+    "show_title" true
+    "show_button" true
+    "site" .Site
+  ) }}
+  {{ end }}
+  {{ end }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

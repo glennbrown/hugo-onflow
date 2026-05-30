@@ -1,0 +1,15 @@
+{{ if .Site.Params.display_color_scheme_toggle }}
+<div class="navigation toggle-color-scheme">
+  <button class="dropdown-toggle button button-icon" aria-expanded="false" aria-label="{{ i18n "toggle_color_scheme" }}">
+    <span class="icon-moon">{{ partial "icons/moon.html" . }}</span>
+    <span class="icon-sun">{{ partial "icons/sun.html" . }}</span>
+  </button>
+  <div class="dropdown">
+    <ul>
+      <li><button class="nav-link toggle-color-scheme-button" value="light">{{ partial "icons/sun.html" . }}<span class="label">{{ i18n "light" }}</span></button></li>
+      <li><button class="nav-link toggle-color-scheme-button" value="dark">{{ partial "icons/moon.html" . }}<span class="label">{{ i18n "dark" }}</span></button></li>
+      <li><button class="nav-link toggle-color-scheme-button" value="system">{{ partial "icons/monitor.html" . }}<span class="label">{{ i18n "system" }}</span></button></li>
+    </ul>
+  </div>
+</div>
+{{ end }}

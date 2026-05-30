@@ -1,0 +1,28 @@
+{{ define "body-class" }}page-list{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+  {{ partial "section/hero.html" (dict
+    "show" true
+    "title" .Title
+    "feature_image" .Params.feature_image
+    "custom_excerpt" .Params.excerpt
+    "Site" .Site
+  ) }}
+
+  {{ $paginator := .Paginate .Pages }}
+  {{ partial "section/posts.html" (dict
+    "pages" $paginator.Pages
+    "paginator" $paginator
+    "show_pagination" true
+    "site" .Site
+  ) }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

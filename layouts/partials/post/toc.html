@@ -1,0 +1,15 @@
+{{ if and .TableOfContents (not (eq .TableOfContents "<nav id=\"TableOfContents\"></nav>")) }}
+<div class="toc toc-scroll toc-hidden container">
+  <button class="toc-button button button-icon" role="button" aria-expanded="false" aria-label="{{ i18n "collapse_toc" }}">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.25 4.25H10.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M3.25 8.25H12.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M5.25 12.25H14.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div class="toc-title">{{ i18n "on_this_page" }}</div>
+
+  {{ .TableOfContents }}
+</div>
+{{ end }}

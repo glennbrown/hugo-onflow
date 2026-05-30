@@ -1,0 +1,9 @@
+<footer class="footer">
+  {{ partial "layout/footer-copyright.html" . }}
+
+  {{ $hasTwitter := .Site.Params.twitter }}
+  {{ $hasFacebook := .Site.Params.facebook }}
+  <nav class="navigation{{ if not (or $hasTwitter $hasFacebook) }} navigation-hide{{ end }}" aria-label="{{ i18n "footer_socials_navigation" }}">
+    {{ partial "component/social-links.html" . }}
+  </nav>
+</footer>

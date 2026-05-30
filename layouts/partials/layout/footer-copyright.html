@@ -1,0 +1,5 @@
+{{ if .Site.Params.footer_copyright }}
+<div class="footer-copyright">{{ .Site.Params.footer_copyright | safeHTML }}</div>
+{{ else }}
+<div class="footer-copyright">&copy; {{ now.Format "2006" }} {{ .Site.Title }}<span> - Published with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &amp; <a href="https://www.priority.vision/themes/onflow/" target="_blank" rel="noopener">OnFlow</a></span></div>
+{{ end }}

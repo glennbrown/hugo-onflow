@@ -1,0 +1,11 @@
+<a class="logo" href="{{ .Site.BaseURL }}" aria-label="{{ .Site.Title }}">
+  {{ if .Site.Params.logo }}
+    <img {{ if .Site.Params.dark_mode_logo }}class="logo-light" {{ end }}src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}">
+  {{ else }}
+    <span{{ if .Site.Params.dark_mode_logo }} class="logo-light"{{ end }}>{{ .Site.Title }}</span>
+  {{ end }}
+
+  {{ with .Site.Params.dark_mode_logo }}
+    <img class="logo-dark" src="{{ . | relURL }}" alt="{{ $.Site.Title }}">
+  {{ end }}
+</a>

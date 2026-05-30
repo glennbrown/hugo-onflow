@@ -1,0 +1,49 @@
+<div class="header">
+  <div class="header-logo">
+    <button class="button button-icon" data-popup-toggle="#popup-navigation" aria-expanded="false" aria-label="{{ i18n "open_navigation_popup" }}">
+      {{ partial "icons/burger.html" . }}
+    </button>
+    {{ partial "component/logo.html" . }}
+  </div>
+
+  <div class="header-navigation">
+    <nav class="navigation" aria-label="{{ i18n "primary_navigation" }}">
+      {{ partial "navigation.html" (dict "menu" .Site.Menus.main "currentURL" .RelPermalink) }}
+    </nav>
+
+    {{ if .Site.Menus.secondary }}
+    <nav class="navigation toggle-navigation-secondary" aria-label="{{ i18n "secondary_navigation" }}">
+      <button class="dropdown-toggle button button-icon" aria-expanded="false" aria-label="{{ i18n "dropdown_toggle_secondary" }}">
+        {{ partial "icons/more-vertical.html" . }}
+      </button>
+      <div class="dropdown dropdown-center">
+        {{ partial "navigation.html" (dict "menu" .Site.Menus.secondary "currentURL" .RelPermalink) }}
+      </div>
+    </nav>
+    {{ end }}
+  </div>
+
+  <div class="header-buttons">
+    {{ partial "component/toggle-color-scheme.html" . }}
+  </div>
+</div>
+
+<div class="popup popup-navigation" data-popup-id="popup-navigation" role="dialog" aria-modal="true" aria-hidden="true" aria-label="{{ i18n "you_can_hide_popup" }}">
+  <div class="popup-content">
+    <div class="popup-header">
+      <button class="button button-icon popup-close" aria-label="{{ i18n "hide_popup" }}">
+        {{ partial "icons/x.html" . }}
+      </button>
+      {{ partial "component/logo.html" . }}
+    </div>
+    <nav class="navigation" aria-label="{{ i18n "popup_primary_navigation" }}">
+      {{ partial "navigation.html" (dict "menu" .Site.Menus.main "currentURL" .RelPermalink) }}
+    </nav>
+    {{ if .Site.Menus.secondary }}
+    <nav class="navigation navigation-secondary" aria-label="{{ i18n "popup_secondary_navigation" }}">
+      {{ partial "navigation.html" (dict "menu" .Site.Menus.secondary "currentURL" .RelPermalink) }}
+    </nav>
+    {{ end }}
+  </div>
+  <button class="popup-close popup-overlay" tabindex="-1" aria-label="{{ i18n "hide_popup" }}"></button>
+</div>

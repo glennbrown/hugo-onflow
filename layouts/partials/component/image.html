@@ -1,0 +1,19 @@
+{{- $src := .src -}}
+{{- $alt := cond (ne (.alt | default "") "") .alt (.altElse | default "") -}}
+{{- $class := .class | default "" -}}
+{{- $width := .width | default "" -}}
+{{- $height := .height | default "" -}}
+{{- $sizes := .sizes | default "(max-width: 560px) 92vw, (max-width: 768px) 500px, (max-width: 992px) 580px, (max-width: 1200px) 680px, 800px" -}}
+{{- $loading := cond (eq (.fast | default false) true) "eager" "lazy" -}}
+{{ if $src }}
+<picture{{ if $class }} class="{{ $class }}"{{ end }}>
+  <img
+    src="{{ $src }}"
+    width="{{ $width }}"
+    height="{{ $height }}"
+    alt="{{ $alt }}"
+    sizes="{{ $sizes }}"
+    loading="{{ $loading }}"
+  >
+</picture>
+{{ end }}

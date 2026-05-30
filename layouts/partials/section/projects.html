@@ -1,0 +1,45 @@
+{{- $pages := .pages -}}
+{{- $paginator := .paginator -}}
+{{- $showTitle := .show_title | default false -}}
+{{- $showButton := .show_button | default false -}}
+{{- $showPagination := .show_pagination | default false -}}
+{{- $title := .title | default "" -}}
+{{- $site := .site -}}
+
+{{ if $pages }}
+<{{ if $showTitle }}section{{ else }}div{{ end }} class="section section-projects container">
+  {{ if $showTitle }}
+  <h2 class="section-title">{{ if $title }}{{ $title }}{{ else }}{{ i18n "projects" }}{{ end }}</h2>
+  {{ end }}
+
+  <div class="section-list section-list-has-badge project-posts-list">
+    {{ range $pages }}
+    {{ partial "component/card-project.html" . }}
+    {{ end }}
+  </div>
+
+  {{ if $showButton }}
+  <a href="/projects/" class="button section-button">
+    <span class="label">{{ i18n "all_projects" }}</span>
+    {{ partial "icons/arrow-right.html" $site }}
+  </a>
+  {{ end }}
+
+  {{ if and $showPagination $paginator }}
+  <div class="section-pagination">
+    {{ if $paginator.HasPrev }}
+    <a class="button section-button" href="{{ $paginator.Prev.URL }}">
+      {{ partial "icons/arrow-up.html" $site }}
+      <span class="label">{{ i18n "previous_posts" }}</span>
+    </a>
+    {{ end }}
+    {{ if $paginator.HasNext }}
+    <a class="button section-button" href="{{ $paginator.Next.URL }}">
+      <span class="label">{{ i18n "load_more" }}</span>
+      {{ partial "icons/arrow-down.html" $site }}
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+</{{ if $showTitle }}section{{ else }}div{{ end }}>
+{{ end }}

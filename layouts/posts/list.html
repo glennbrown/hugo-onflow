@@ -1,0 +1,31 @@
+{{ define "body-class" }}page-writings{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+  {{ partial "section/hero.html" (dict
+    "show" true
+    "title" (.Title | default (i18n "writings"))
+    "feature_image" .Params.feature_image
+    "feature_alt" .Title
+    "custom_excerpt" .Params.excerpt
+    "Site" .Site
+  ) }}
+
+  {{ with .Content }}<div class="post-content container">{{ . }}</div>{{ end }}
+
+  {{ $paginator := .Paginate .Pages }}
+  {{ partial "section/posts.html" (dict
+    "pages" $paginator.Pages
+    "paginator" $paginator
+    "show_pagination" true
+    "site" .Site
+  ) }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

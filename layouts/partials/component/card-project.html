@@ -1,0 +1,23 @@
+{{- $post := . -}}
+<article data-year="{{ $post.Date.Format "2006" }}" class="card card-project">
+  <a class="card-link" href="{{ $post.RelPermalink }}" aria-label="{{ $post.Title }}"></a>
+
+  <div class="card-header">
+    <h2 class="card-title"><span class="label">{{ $post.Title }}</span></h2>
+
+    <span>
+      <time class="card-date" datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date.Format "Jan 2" }}</time>
+      <span class="tooltip tooltip-top">{{ $post.Date.Format "January 02, 2006" }}</span>
+    </span>
+  </div>
+
+  {{ with $post.Params.feature_image }}
+  {{ partial "component/image.html" (dict "size" "500" "width" "500" "height" "280" "sizes" "(max-width: 560px) 92vw, 500px" "class" "card-image" "src" . "alt" ($post.Params.feature_image_alt | default $post.Title)) }}
+  {{ end }}
+
+  {{ with ($post.Params.excerpt | default $post.Summary) }}
+  <div class="card-content">
+    <p>{{ . | plainify | truncate 200 }}</p>
+  </div>
+  {{ end }}
+</article>

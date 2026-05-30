@@ -1,0 +1,49 @@
+{{ define "body-class" }}page-author{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+  {{ partial "section/hero.html" (dict
+    "show" true
+    "title" .Title
+    "feature_image" .Params.profile_image
+    "feature_alt" .Title
+    "custom_excerpt" .Params.bio
+    "total_posts" (len .Pages)
+    "show_author_links" true
+    "author_website" .Params.website
+    "author_twitter" .Params.twitter
+    "author_facebook" .Params.facebook
+    "Site" .Site
+  ) }}
+
+  {{/* Posts by this author */}}
+  {{ $posts := where .Pages "Section" "posts" }}
+  {{ if $posts }}
+  {{ $paginator := .Paginate $posts }}
+  {{ partial "section/posts.html" (dict
+    "pages" $paginator.Pages
+    "paginator" $paginator
+    "show_pagination" true
+    "site" .Site
+  ) }}
+  {{ end }}
+
+  {{/* Projects by this author */}}
+  {{ $projects := where .Pages "Section" "projects" }}
+  {{ if $projects }}
+  {{ partial "section/projects.html" (dict
+    "pages" $projects
+    "show_title" true
+    "show_pagination" false
+    "site" .Site
+  ) }}
+  {{ end }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

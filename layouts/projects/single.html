@@ -1,0 +1,76 @@
+{{ define "body-class" }}page-post page-project{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-container">
+      {{ with (index (.GetTerms "tags") 0) }}
+      <a class="post-tag" href="{{ .Page.RelPermalink }}"><span class="label">{{ .Page.Title }}</span></a>
+      {{ end }}
+
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      {{ with .Params.excerpt }}
+      <p class="post-excerpt">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    <div class="post-header-info">
+      <div class="post-header-meta">
+        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 02, 2006" }}</time>
+      </div>
+
+      <div class="post-buttons">
+        {{ partial "component/button-share.html" . }}
+      </div>
+    </div>
+
+    <div class="post-featured">
+      {{ with .Params.feature_image }}
+      <figure class="post-featured-image">
+        {{ partial "component/image.html" (dict "width" "800" "height" "450" "fast" true "src" . "alt" ($.Params.feature_image_alt | default $.Title)) }}
+        {{ with $.Params.feature_image_caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+      </figure>
+      {{ end }}
+    </div>
+  </header>
+
+  {{ partial "post/content.html" . }}
+
+  {{ if .Content }}
+  <div class="post-footer container">
+    {{ with .GetTerms "tags" }}
+    <ul class="post-tags">
+      {{ range . }}
+      <li><a href="{{ .Page.RelPermalink }}"><span class="label">#{{ .Page.Title | urlize }}</span></a></li>
+      {{ end }}
+    </ul>
+    {{ end }}
+
+    <div class="post-buttons">
+      {{ partial "component/button-share.html" . }}
+    </div>
+  </div>
+  {{ end }}
+</article>
+
+{{/* Next projects */}}
+{{ $related := (where (where site.RegularPages "Section" "projects") "Permalink" "ne" .Permalink) | first 4 }}
+{{ if $related }}
+{{ partial "section/projects.html" (dict
+  "pages" $related
+  "show_title" true
+  "title" (i18n "next_projects")
+  "site" .Site
+) }}
+{{ end }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

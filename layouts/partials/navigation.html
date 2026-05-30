@@ -1,0 +1,16 @@
+{{- $menu := .menu -}}
+{{- $currentURL := .currentURL -}}
+<ul>
+  {{- range $menu }}
+  {{- if eq .Name "---" }}
+  <li class="nav-separator"></li>
+  {{- else }}
+  {{- $isActive := eq $currentURL .URL }}
+  <li>
+    <a class="nav-link nav-link-{{ .Identifier }}{{ if $isActive }} nav-link-current{{ end }}" href="{{ .URL }}">
+      <span class="label">{{ .Name }}</span>
+    </a>
+  </li>
+  {{- end }}
+  {{- end }}
+</ul>

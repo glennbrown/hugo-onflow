@@ -1,0 +1,18 @@
+<ul class="social-links">
+  {{ with .Site.Params.twitter }}
+  <li>
+    <a class="social-link" href="https://twitter.com/{{ . }}" target="_blank" rel="noopener noreferrer">
+      {{ partial "icons/twitter.html" $ }}
+      <span>{{ i18n "x" }}</span>
+    </a>
+  </li>
+  {{ end }}
+  {{ with .Site.Params.facebook }}
+  <li>
+    <a class="social-link" href="https://www.facebook.com/{{ . }}" target="_blank" rel="noopener noreferrer">
+      {{ partial "icons/facebook.html" $ }}
+      <span>{{ i18n "facebook" }}</span>
+    </a>
+  </li>
+  {{ end }}
+</ul>

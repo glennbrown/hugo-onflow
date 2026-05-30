@@ -1,0 +1,103 @@
+{{ define "body-class" }}page-post{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-container">
+      {{ with (index (.GetTerms "tags") 0) }}
+      <a class="post-tag" href="{{ .Page.RelPermalink }}"><span class="label">{{ .Page.Title }}</span></a>
+      {{ end }}
+
+      <h1 class="post-title">{{ .Title }}</h1>
+
+      {{ with .Params.excerpt }}
+      <p class="post-excerpt">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    <div class="post-header-info">
+      {{/* Author images */}}
+      {{ $authors := .GetTerms "authors" }}
+      {{ if $authors }}
+      <div class="post-header-author-images post-header-author-images-{{ len $authors }}">
+        {{ range first 4 $authors }}
+        <a class="post-header-author-image" href="{{ .Page.RelPermalink }}" tabindex="-1" aria-label="{{ .Page.Title }}">
+          {{ with .Page.Params.profile_image }}
+          {{ partial "component/image.html" (dict "size" "60" "width" "36" "height" "36" "sizes" "36px" "fast" true "src" . "alt" $.Page.Title) }}
+          {{ end }}
+        </a>
+        {{ end }}
+      </div>
+      <div class="post-header-authors-meta">
+        <div class="post-header-authors">
+          {{ range $i, $author := (first 4 $authors) }}
+          <a class="post-header-author" href="{{ $author.Page.RelPermalink }}">
+            <span class="label">{{ $author.Page.Title }}</span>
+          </a>
+          {{ if lt (add $i 1) (len (first 4 $authors)) }}<span>&</span>{{ end }}
+          {{ end }}
+        </div>
+        <div class="post-header-meta">
+          <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 02, 2006" }}</time>
+          {{ if .ReadingTime }}
+          <span>·</span>
+          <span class="post-time">{{ .ReadingTime }} {{ i18n "one_min_read" }}</span>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+      <div class="post-buttons">
+        {{ partial "component/button-share.html" . }}
+      </div>
+    </div>
+
+    <div class="post-featured">
+      {{ with .Params.feature_image }}
+      <figure class="post-featured-image">
+        {{ partial "component/image.html" (dict "width" "800" "height" "450" "fast" true "src" . "alt" ($.Params.feature_image_alt | default $.Title)) }}
+        {{ with $.Params.feature_image_caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+      </figure>
+      {{ end }}
+    </div>
+  </header>
+
+  {{ partial "post/content.html" . }}
+
+  {{ if .Content }}
+  <div class="post-footer container">
+    {{ with .GetTerms "tags" }}
+    <ul class="post-tags">
+      {{ range . }}
+      <li><a href="{{ .Page.RelPermalink }}"><span class="label">#{{ .Page.Title | urlize }}</span></a></li>
+      {{ end }}
+    </ul>
+    {{ end }}
+
+    <div class="post-buttons">
+      {{ partial "component/button-share.html" . }}
+    </div>
+  </div>
+  {{ end }}
+</article>
+
+{{/* Read next */}}
+{{ $related := (where (where site.RegularPages "Section" "posts") "Permalink" "ne" .Permalink) | first 4 }}
+{{ if $related }}
+{{ partial "section/posts.html" (dict
+  "pages" $related
+  "show_title" true
+  "title" (i18n "read_next")
+  "site" .Site
+) }}
+{{ end }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

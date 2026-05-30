@@ -1,0 +1,69 @@
+{{- $ctx := . -}}
+{{- $show := .show | default true -}}
+{{ if $show }}
+<section class="section-hero container">
+  <div class="section-hero-content">
+    {{ with .cover_image }}
+    <figure class="section-hero-cover">
+      {{ partial "component/image.html" (dict "size" "500" "width" "500" "height" "214" "sizes" "500px" "fast" true "src" . "alt" ($.title | default $.Site.Title)) }}
+    </figure>
+    {{ end }}
+
+    {{ with .feature_image }}
+    <figure class="section-hero-image">
+      {{ partial "component/image.html" (dict "size" "60" "width" "60" "height" "60" "sizes" "60px" "fast" true "src" . "alt" ($.feature_alt | default ($.title | default $.Site.Title))) }}
+      {{ with $.feature_caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+    </figure>
+    {{ end }}
+
+    <h1{{ with .accent_color }} style="--tag--color: {{ . }};"{{ end }}>{{ .title | default .Site.Title }}</h1>
+
+    {{ with .location }}<div class="section-hero-location">{{ . }}</div>{{ end }}
+
+    {{ with .custom_excerpt }}<p>{{ . }}</p>{{ end }}
+
+    {{ if and .total_posts (not .custom_excerpt) }}
+    <p>{{ .total_posts }} {{ if eq .total_posts 1 }}{{ i18n "one_post" | replace "%" (string .total_posts) }}{{ else }}{{ i18n "many_posts" | replace "%" (string .total_posts) }}{{ end }}</p>
+    {{ end }}
+
+    {{ if .show_social_links }}
+    {{ $hasTwitter := .Site.Params.twitter }}
+    {{ $hasFacebook := .Site.Params.facebook }}
+    <nav class="navigation{{ if not (or $hasTwitter $hasFacebook) }} navigation-hide{{ end }}" aria-label="{{ i18n "socials_navigation" }}">
+      {{ partial "component/social-links.html" . }}
+    </nav>
+    {{ end }}
+
+    {{ if .show_author_links }}
+    <nav class="navigation" aria-label="{{ i18n "author_socials_navigation" }}">
+      <ul class="social-links social-links-author">
+        {{ with .author_website }}
+        <li>
+          <a class="social-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+            {{ partial "icons/glob.html" $ }}
+            <span>{{ i18n "website" }}</span>
+          </a>
+        </li>
+        {{ end }}
+        {{ with .author_twitter }}
+        <li>
+          <a class="social-link" href="https://twitter.com/{{ . }}" target="_blank" rel="noopener noreferrer">
+            {{ partial "icons/twitter.html" $ }}
+            <span>{{ i18n "x" }}</span>
+          </a>
+        </li>
+        {{ end }}
+        {{ with .author_facebook }}
+        <li>
+          <a class="social-link" href="https://www.facebook.com/{{ . }}" target="_blank" rel="noopener noreferrer">
+            {{ partial "icons/facebook.html" $ }}
+            <span>{{ i18n "facebook" }}</span>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </nav>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

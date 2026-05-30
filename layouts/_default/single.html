@@ -1,0 +1,26 @@
+{{ define "body-class" }}page-static{{ end }}
+
+{{ define "main" }}
+<a href="#content" class="button screen-reader-text"><span class="label">{{ i18n "skip_to_content" }}</span></a>
+
+{{ partial "layout/header.html" . }}
+
+<main class="content" id="content">
+  {{ if or .Params.feature_image .Title }}
+  {{ partial "section/hero.html" (dict
+    "show" true
+    "title" .Title
+    "feature_image" .Params.feature_image
+    "feature_alt" .Params.feature_image_alt
+    "feature_caption" .Params.feature_image_caption
+    "custom_excerpt" .Params.excerpt
+    "Site" .Site
+  ) }}
+  {{ end }}
+
+  {{ partial "post/content.html" . }}
+</main>
+
+{{ partial "layout/scroll-progress.html" . }}
+{{ partial "layout/footer.html" . }}
+{{ end }}

@@ -1,0 +1,44 @@
+{{- $url := .Permalink | urlize -}}
+{{- $title := .Title | urlize -}}
+
+<li>
+  <a class="nav-link" href="https://x.com/intent/tweet?url={{ .Permalink }}&text={{ .Title | urlize }}" rel="noopener" target="_blank">
+    {{ partial "icons/twitter.html" . }}
+    <span class="label">{{ i18n "share_on_x" }}</span>
+  </a>
+</li>
+
+<li>
+  <a class="nav-link" href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}&quote={{ .Title | urlize }}" rel="noopener" target="_blank">
+    {{ partial "icons/facebook.html" . }}
+    <span class="label">{{ i18n "share_on_facebook" }}</span>
+  </a>
+</li>
+
+<li>
+  <a class="nav-link" href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}&summary={{ .Title | urlize }}" rel="noopener" target="_blank">
+    {{ partial "icons/linkedin.html" . }}
+    <span class="label">{{ i18n "share_on_linkedin" }}</span>
+  </a>
+</li>
+
+<li>
+  <a class="nav-link" href="https://www.pinterest.com/pin/create/button/?url={{ .Permalink }}&description={{ .Title | urlize }}" rel="noopener" target="_blank">
+    {{ partial "icons/pinterest.html" . }}
+    <span class="label">{{ i18n "share_on_pinterest" }}</span>
+  </a>
+</li>
+
+<li>
+  <a class="nav-link" href="mailto:?subject={{ .Title | urlize }}&body={{ .Permalink }}" rel="noopener" target="_blank">
+    {{ partial "icons/mail.html" . }}
+    <span class="label">{{ i18n "email" }}</span>
+  </a>
+</li>
+
+<li>
+  <button class="nav-link" data-clipboard-text="{{ .Permalink }}">
+    {{ partial "icons/link.html" . }}
+    <span class="label">{{ i18n "copy_link" }}</span>
+  </button>
+</li>

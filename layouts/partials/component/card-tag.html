@@ -1,0 +1,22 @@
+{{- $term := . -}}
+<div class="card card-tag">
+  <a class="card-link" href="{{ $term.Page.RelPermalink }}" aria-label="{{ $term.Page.Title }}"></a>
+
+  <div class="card-header">
+    {{ with $term.Page.Params.feature_image }}
+    {{ partial "component/image.html" (dict "size" "32" "width" "26" "height" "26" "sizes" "26px" "class" "card-image" "src" . "alt" $term.Page.Title) }}
+    {{ end }}
+
+    <h2 class="card-title">
+      <span class="label">{{ $term.Page.Title }}</span>
+    </h2>
+
+    <span class="card-count">{{ $term.Count }} {{ if eq $term.Count 1 }}{{ i18n "one_post" | replace "%" (string $term.Count) }}{{ else }}{{ i18n "many_posts" | replace "%" (string $term.Count) }}{{ end }}</span>
+  </div>
+
+  {{ with $term.Page.Params.description }}
+  <div class="card-content">
+    <p>{{ . }}</p>
+  </div>
+  {{ end }}
+</div>

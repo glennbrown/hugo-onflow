@@ -1,0 +1,6 @@
+{{ with .Content }}
+{{ partial "post/toc.html" $ }}
+<div class="post-content">
+  {{ . }}
+</div>
+{{ end }}

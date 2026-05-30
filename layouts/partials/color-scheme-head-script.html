@@ -1,0 +1,8 @@
+<script>
+  (function() {
+    var colorScheme = localStorage.getItem('color-scheme');
+    if (colorScheme) {
+      document.documentElement.setAttribute('data-color-scheme', colorScheme);
+    }
+  })();
+</script>
